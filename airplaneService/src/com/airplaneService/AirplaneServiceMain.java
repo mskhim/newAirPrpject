@@ -22,7 +22,7 @@ import com.airplaneService.view.MenuViewer;
 
 public class AirplaneServiceMain {
 	public static Scanner sc = new Scanner(System.in);
-	// 메인
+	// 장표메인
 	public static void main(String[] args) throws SQLException {
 		int no = 0;
 		boolean exitFlag = false;
