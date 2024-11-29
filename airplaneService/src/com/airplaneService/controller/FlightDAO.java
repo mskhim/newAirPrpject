@@ -7,16 +7,19 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import com.airplaneService.model.FlightJoinVO;
 import com.airplaneService.model.FlightVO;
 
 public class FlightDAO {
-	public static String FLIGHT_SELECT_BY_NO = "SELECT * FROM FLIGHT WHERE NO = TO_CHAR(?,'FM00000')";//추가
-	public static String FLIGHT_SELECT = "SELECT * FROM FLIGHT";
+	public static String FLIGHT_SELECT_BY_NO = "SELECT F.NO, F.PLANE_NO, F.DEPARTURE_COUNTRY_NO, C.NAME,F.PRICE, F.DEPARTURE_HOUR,F.ARRIVAL_HOUR FROM FLIGHT F JOIN COUNTRY C ON C.NO=F.ARRIVAL_COUNTRY_NO WHERE F.NO = TO_CHAR(?,'FM00000')";//추가
+	public static String FLIGHT_SELECT = "SELECT F.NO, PLANE_NO, DEPARTURE_COUNTRY_NO, C.NAME,F.PRICE, F.DEPARTURE_HOUR,F.ARRIVAL_HOUR FROM FLIGHT F JOIN COUNTRY C ON C.NO=F.ARRIVAL_COUNTRY_NO";
 //	public static String FLIGHT_SELECT_COUNTRY = "SELECT * FROM FLIGHT WHERE ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000')";
-	public static String FLIGHT_INSERT = "INSERT INTO FLIGHT(NO, PLANE_NO, ARRIVAL_COUNTRY_NO, DEPARTURE_HOUR) VALUES(TO_CHAR(3,'FM00000'),TO_CHAR(1,'FM00000'),TO_CHAR(1,'FM00000'),TO_DATE(?,'YY-MM-DD HH24:MI:SS'))";
-	public static String FLIGHT_UPDATE = "UPDATE FLIGHT SET PLANE_NO = TO_CHAR(?,'FM00000'), ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000'), DEPARTURE_HOUR = TO_DATE(?,'YY-MM-DD HH24:MI:SS') WHERE NO = TO_CHAR(?,'FM00000');";
+	public static String FLIGHT_INSERT = "INSERT INTO FLIGHT(NO, PLANE_NO, ARRIVAL_COUNTRY_NO, DEPARTURE_HOUR) VALUES((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM00000') FROM FLIGHT),TO_CHAR(?,'FM00000'),TO_CHAR(?,'FM00000'),?)";
+	public static String FLIGHT_UPDATE = "UPDATE FLIGHT SET PLANE_NO = TO_CHAR(?,'FM00000'), ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000'), DEPARTURE_HOUR = ? WHERE NO = TO_CHAR(?,'FM00000');";
 	public static String FLIGHT_DELETE = "DELETE FROM FLIGHT WHERE NO = TO_CHAR(?,'FM00000')";
-
+	public static String FLIGHT_SELECT_JOIN_COUNTRY = "SELECT F.NO as no, PLANE_NO, DEPARTURE_COUNTRY_NO, ARRIVAL_COUNTRY_NO, PRICE, C.NAME as name, C.DISTANCE as distance, DEPARTURE_HOUR, ARRIVAL_HOUR FROM FLIGHT F INNER JOIN COUNTRY C ON C.NO = F.ARRIVAL_COUNTRY_NO WHERE F.ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000')";
+	
+	
 	public ArrayList<FlightVO> selectDB() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -32,14 +35,12 @@ public class FlightDAO {
 				do {
 					String no = rs.getString("NO");
 					String planeNo = rs.getString("PLANE_NO");
-					String departureCountryNo = rs.getString("DEPARTURE_COUNTRY_NO");
-					String arrivalCountryNo = rs.getString("ARRIVAL_COUNTRY_NO");
 					int price = rs.getInt("PRICE");
 					Timestamp departureHour = rs.getTimestamp("DEPARTURE_HOUR");
 					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
-					FlightVO svo = new FlightVO(no, planeNo, departureCountryNo, arrivalCountryNo, price, departureHour,
-							arrivalHour);
-					flightList.add(svo);
+					String arvCountry = rs.getString("NAME");
+					FlightVO fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, arvCountry, arvCountry);
+					flightList.add(fvo);
 				} while (rs.next());
 			} else {
 				flightList = null;
@@ -65,17 +66,15 @@ public class FlightDAO {
 		try {
 			con = DBUtility.dbCon();
 			pstmt = con.prepareStatement(FLIGHT_INSERT);
-			pstmt.setString(1, fvo.getNo());
-			pstmt.setString(2, fvo.getPlaneNo());
-			pstmt.setString(3, fvo.getArrivalCountryNo());
-			pstmt.setTimestamp(4, fvo.getDepartureHour());
-
+			pstmt.setString(1, fvo.getPlaneNo());
+			pstmt.setString(2, fvo.getArrivalCountryNo());
+			pstmt.setTimestamp(3, fvo.getDepartureHour());
 			int count = pstmt.executeUpdate();
 
 			successFlag = (count != 0) ? true : false;
 
 		} catch (SQLException e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 		} finally {
 			DBUtility.dbClose(con, pstmt);
 		}
@@ -150,13 +149,11 @@ public class FlightDAO {
 				do {
 					String no = rs.getString("NO");
 					String planeNo = rs.getString("PLANE_NO");
-					String departureCountryNo = rs.getString("DEPARTURE_COUNTRY_NO");
-					String arrivalCountryNo = rs.getString("ARRIVAL_COUNTRY_NO");
 					int price = rs.getInt("PRICE");
 					Timestamp departureHour = rs.getTimestamp("DEPARTURE_HOUR");
 					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
-					fvo = new FlightVO(no, planeNo, departureCountryNo, arrivalCountryNo, price, departureHour,
-							arrivalHour);
+					String arvCountry = rs.getString("NAME");
+					fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, arvCountry, arvCountry);
 				} while (rs.next());
 			} 
 		} catch (SQLException e) {
@@ -167,4 +164,39 @@ public class FlightDAO {
 		return fvo;
 	}
 
+	
+	public ArrayList<FlightJoinVO> selectCountryDB(FlightJoinVO fjvo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<FlightJoinVO> flightList = new ArrayList<FlightJoinVO>();
+		try {
+			con = DBUtility.dbCon();
+			pstmt = con.prepareStatement(FLIGHT_SELECT_JOIN_COUNTRY);
+			pstmt.setString(1, fjvo.getArrivalCountryNo());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				do {
+					String no = rs.getString("NO");
+					String planeNo = rs.getString("PLANE_NO");
+					String departureCountryNo = rs.getString("DEPARTURE_COUNTRY_NO");
+					String arrivalCountryNo = rs.getString("ARRIVAL_COUNTRY_NO");
+					int price = rs.getInt("PRICE");
+					String name = rs.getString("NAME");
+					int distance = rs.getInt("DISTANCE");
+					Timestamp departureHour = rs.getTimestamp("DEPARTURE_HOUR");
+					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
+
+					FlightJoinVO fjVo = new FlightJoinVO(no, planeNo, departureCountryNo, arrivalCountryNo, price, departureHour, arrivalHour, distance, name);
+
+					flightList.add(fjVo);
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtility.dbClose(con, pstmt, rs);
+		}
+		return flightList;
+	}
 }

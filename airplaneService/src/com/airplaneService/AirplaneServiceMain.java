@@ -403,6 +403,9 @@ public class AirplaneServiceMain {
 			case FLIGHT_SEARCH_MENU_CHOICE.SEATS:
 				flightSeatsMenu();	
 				break;
+			case FLIGHT_SEARCH_MENU_CHOICE.FIND:
+				frm.findCountryManager();	
+				break;
 			case FLIGHT_SEARCH_MENU_CHOICE.END:
 				System.out.println("프로그램을 종료합니다.");
 				exitFlag = true;

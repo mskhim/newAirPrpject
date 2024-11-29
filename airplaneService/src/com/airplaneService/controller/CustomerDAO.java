@@ -13,7 +13,7 @@ import com.airplaneService.model.CustomerVO;
 public class CustomerDAO
 {
 	// String no, String name, String birth, String phone, Date regist, int right,  String id, String pw, int count
-	public final String CUSTOMER_INSERT = "INSERT INTO CUSTOMER(NO, NAME, BIRTH, PHONE, REGIST, ID, PW) VALUES(?, ?, ?, ?, SYSDATE, ?, ?)";
+	public final String CUSTOMER_INSERT = "INSERT INTO CUSTOMER(NO, NAME, BIRTH, PHONE, REGIST, ID, PW) VALUES((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM0000000') FROM CUSTOMER), ?, ?, ?, SYSDATE, ?, ?)";
 	public final String CUSTOMER_SELECT = "SELECT * FROM CUSTOMER ORDER BY NO";
 	public final String CUSTOMER_CHECK_SELECT = "SELECT * FROM CUSTOMER WHERE ID=? AND PHONE=?";
     // public final String LANDPRICE_UPDATE = "UPDATE LANDPRICE SET GPSLATI = ?, GPSLONG = ?, NODEID = ?, NODENM = ? WHERE NODENO = ?";
@@ -33,14 +33,13 @@ public class CustomerDAO
 		con = DBUtility.dbCon();
 
 		pstmt = con.prepareStatement(CUSTOMER_INSERT);
-		pstmt.setString(1, abcvo.getNo());
-		pstmt.setString(2, abcvo.getName());
-		pstmt.setString(3, abcvo.getBirth());
-		pstmt.setString(4, abcvo.getPhone());
+		pstmt.setString(1, abcvo.getName());
+		pstmt.setString(2, abcvo.getBirth());
+		pstmt.setString(3, abcvo.getPhone());
 		// pstmt.setDate(5, abcvo.getRegist());	//
 		// pstmt.setInt(5, abcvo.getRight());	//
-		pstmt.setString(5, abcvo.getId());
-		pstmt.setString(6, abcvo.getPw());
+		pstmt.setString(4, abcvo.getId());
+		pstmt.setString(5, abcvo.getPw());
 		// pstmt.setInt(9, abcvo.getCcount());	//
 		
 		int result = pstmt.executeUpdate();
@@ -258,5 +257,54 @@ public class CustomerDAO
 			DBUtility.dbClose(con, stmt, rs);
 		}
 		return abcvo.countPrint();
+	}
+	
+
+
+
+
+public ArrayList <CustomerVO> selectMyDB()	// 3번 메뉴 <내 가입정보 확인하기>
+	{
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList <CustomerVO> AirBookingCustomerVOList = new ArrayList <CustomerVO>();
+
+		con = DBUtility.dbCon();
+		
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(CUSTOMER_SELECT);
+
+			if(rs.next())
+			{
+				do
+				{					
+					String no = rs.getString("NO");
+					String name = rs.getString("NAME");
+					String birth = rs.getString("BIRTH");
+					String phone = rs.getString("PHONE");
+					Date regist = rs.getDate("REGIST");
+					// int right = rs.getInt("RIGHT");
+					String id = rs.getString("ID");
+					String pw = rs.getString("PW");
+					// int cCount = rs.getInt("C_COUNT");
+
+					CustomerVO abcvo = new CustomerVO(no, name, birth, phone, regist, id, pw);
+					
+					AirBookingCustomerVOList.add(abcvo);
+				} while (rs.next());
+			} else
+			{
+				AirBookingCustomerVOList = null; 
+			}
+		} catch (SQLException e)
+		{
+			System.out.println(e.toString());
+		} finally
+		{
+			DBUtility.dbClose(con, stmt, rs);
+		}
+		return AirBookingCustomerVOList;
 	}
 }

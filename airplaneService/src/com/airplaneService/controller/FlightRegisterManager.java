@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.airplaneService.model.FlightJoinVO;
 import com.airplaneService.model.FlightVO;
 
 public class FlightRegisterManager {
@@ -13,7 +14,6 @@ public class FlightRegisterManager {
 	public void selectManager() {
 		FlightDAO fdao = new FlightDAO();
 		ArrayList<FlightVO> flightList = new ArrayList<FlightVO>();
-
 		flightList = fdao.selectDB();
 		if (flightList == null) {
 			System.out.println("데이터가 존재하지 않습니다.");
@@ -38,13 +38,13 @@ public class FlightRegisterManager {
 		FlightDAO fdao = new FlightDAO();
 		FlightVO fvo = new FlightVO();
 		
-		System.out.println("항공편 명을 입력 해 주세요\n>>");
-		String no = sc.nextLine();
-		System.out.println("비행기 명을 입력 해 주세요\n>>");
-		String planeNo = sc.nextLine();
-		System.out.println("도착 국가를 입력 해 주세요\n>>");
-		String arrivalCountryNo = sc.nextLine();
-		System.out.println("출발 시간을 입력 해 주세요\n>>");
+		System.out.println("비행기 번호을 입력 해 주세요.");
+		PlaneRegisterManager.printPlaneList();
+		String planeNo = PlaneRegisterManager.returnRightNo().getNo();
+		System.out.println("도착 국가의 번호를 입력 해 주세요.");
+		CountryRegisterManager.printCountryList();
+		String arrivalCountryNo = CountryRegisterManager.returnRightNo().getNo(); 
+		System.out.print("출발 시간을 입력 해 주세요(yyyy/MM/dd HH:mm형식으로 입력.)\n>>");
 		Timestamp departureHour = null;
 		boolean timeFlag = false;
 		while (!timeFlag) {
@@ -58,9 +58,8 @@ public class FlightRegisterManager {
 				timeFlag = true;
 			}
 		}
-		fvo = new FlightVO(no, planeNo, arrivalCountryNo, departureHour);
+		fvo = new FlightVO(null, planeNo, arrivalCountryNo, departureHour);
 		boolean successFlag = fdao.insertDB(fvo);
-
 		if (successFlag == true) {
 			System.out.println("입력이 완료되었습니다.");
 		} else {
@@ -72,13 +71,16 @@ public class FlightRegisterManager {
 		FlightDAO fdao = new FlightDAO();
 		FlightVO fvo = new FlightVO();
 		
-		System.out.println("수정하고자 하는 항공편 번호를 입력 해 주세요\n>>");
+		System.out.println("수정할 항공편의 번호를 입력 해 주세요\n>>");
+		selectManager();
 		String no = returnRightNo().getNo();
-		System.out.println("비행기 명을 입력 해 주세요\n>>");
-		String planeNo = sc.nextLine();
-		System.out.println("도착 국가를 입력 해 주세요\n>>");
-		String arrivalCountryNo = sc.nextLine();
-		System.out.println("출발 시간을 입력 해 주세요\n>>");
+		System.out.println("비행기 번호을 입력 해 주세요.");
+		PlaneRegisterManager.printPlaneList();
+		String planeNo = PlaneRegisterManager.returnRightNo().getNo();
+		System.out.println("도착 국가의 번호를 입력 해 주세요.");
+		CountryRegisterManager.printCountryList();
+		String arrivalCountryNo = CountryRegisterManager.returnRightNo().getNo(); 
+		System.out.print("출발 시간을 입력 해 주세요(yyyy/MM/dd HH:mm형식으로 입력.)\n>>");
 		Timestamp departureHour = null;
 		boolean timeFlag = false;
 		while (!timeFlag) {
@@ -105,8 +107,8 @@ public class FlightRegisterManager {
 	public void deleteManager() {
 		FlightDAO fdao = new FlightDAO();
 		FlightVO fvo = new FlightVO();
-		
-		System.out.println("삭제하고자 하는 항공편 번호를 입력 해 주세요\n>>");
+		selectManager();
+		System.out.println("삭제할 항공편 번호를 입력 해 주세요\n>>");
 		fvo = new FlightVO();
 		fvo.setNo(returnRightNo().getNo());
 		
@@ -120,6 +122,7 @@ public class FlightRegisterManager {
 	}
 
 	private void printFlightList(ArrayList<FlightVO> flightList) {
+			System.out.println(FlightVO.getHeader());
 		for (FlightVO fvo : flightList) {
 			System.out.println(fvo.toString());
 		}
@@ -127,7 +130,7 @@ public class FlightRegisterManager {
 	}
 	
 	// 실행하면 적합한 no 가 나올떄까지 반복해서 올바른 FlightVO를 반환해주는 함수
-		public FlightVO returnRightNo() {
+		public static FlightVO returnRightNo() {
 			boolean exitFlag = false;
 			FlightVO fvo = new FlightVO();
 			FlightDAO fDAO = new FlightDAO();
@@ -140,12 +143,35 @@ public class FlightRegisterManager {
 					exitFlag = true;
 
 				} else {
-					System.out.println("존재하지 않는 예매정보입니다.");
+					System.out.println("존재하지 않는 항공편정입니다.");
 					System.out.print("재입력 >>");
 				}
 
 			}
 			return fvo;
 		}
+		
+		public void findCountryManager() {
+			FlightDAO fdao = new FlightDAO();
+			ArrayList<FlightJoinVO> flightList = new ArrayList<FlightJoinVO>();
+			System.out.print("항공편 출력을 원하는 나라의 번호를 입력해주세요.\n>>");
+			CountryRegisterManager.printCountryList();
+		 String arrivalCountryNo =CountryRegisterManager.returnRightNo().getNo();
+			FlightJoinVO fjvo = new FlightJoinVO();
+			fjvo.setArrivalCountryNo(arrivalCountryNo);
+			flightList = fdao.selectCountryDB(fjvo);
+			if (flightList == null) {
+				System.out.println("해당하는 항공편이 존재하지 않습니다.");
+				return;
+			}
+			printFlightJoinList(flightList);
+		}
+		
+		private void printFlightJoinList(ArrayList<FlightJoinVO> flightList) {
+				FlightJoinVO.getHeader();
+			for (FlightJoinVO fjvo : flightList) {
+	            System.out.println(fjvo.toString());
+	        }
+	    }
 }
 

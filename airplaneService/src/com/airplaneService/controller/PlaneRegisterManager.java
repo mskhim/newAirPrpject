@@ -10,10 +10,11 @@ public class PlaneRegisterManager {
 	public static Scanner sc = new Scanner(System.in);
 
 	// 여객기 리스트 출력
-	private void printPlaneList() throws SQLException {
+	public static void printPlaneList() {
 		PlaneDAO planeDAO = new PlaneDAO();
 		ArrayList<PlaneVO> planes = planeDAO.selectPlaneDB();
 		if (planes != null && !planes.isEmpty()) {
+			System.out.println(PlaneVO.getHeader());
 			for (PlaneVO plane : planes) {
 				System.out.println(plane);
 			}
@@ -109,6 +110,7 @@ public class PlaneRegisterManager {
 		String no = sc.nextLine();
 		PlaneVO plane = planeDAO.findPlaneByNo(no);
 		if (plane != null) {
+			System.out.println(PlaneVO.getHeader());
 			System.out.println(plane);
 		} else {
 			System.out.println("해당 여객기 정보가 존재하지 않습니다.");
@@ -116,7 +118,7 @@ public class PlaneRegisterManager {
 	}
 
 	// 유효한 여객기 코드를 입력받아 올바른 PlaneVO를 반환해주는 함수
-	private PlaneVO returnRightNo() throws SQLException {
+	public static PlaneVO returnRightNo() {
 		boolean exitFlag = false;
 		PlaneVO plane = null;
 		PlaneDAO planeDAO = new PlaneDAO();

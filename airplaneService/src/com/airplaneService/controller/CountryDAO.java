@@ -11,10 +11,10 @@ import com.airplaneService.model.CountryVO;
 public class CountryDAO {
 	
 	private static final String COUNTRY_SELECT = "SELECT * FROM COUNTRY";
-	private static final String COUNTRY_INSERT = "INSERT INTO COUNTRY (NAME, DISTANCE) VALUES (?, ?)";
+	private static final String COUNTRY_INSERT = "INSERT INTO COUNTRY (NO,NAME, DISTANCE) VALUES ((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM00000') FROM COUNTRY),?, ?)";
 	private static final String COUNTRY_DELETE = "DELETE FROM COUNTRY WHERE NO = ?";
 	private static final String COUNTRY_UPDATE = "UPDATE COUNTRY SET NAME = ?, DISTANCE = ? WHERE NO = ?";
-	private static final String COUNTRY_NO_SELECT = "SELECT * FROM COUNTRY WHERE NO = ?";
+	private static final String COUNTRY_NO_SELECT = "SELECT * FROM COUNTRY WHERE NO = TO_CHAR(?,'FM00000')";
 	
 
     // 여행국 정보 출력

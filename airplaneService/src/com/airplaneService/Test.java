@@ -11,11 +11,11 @@ public class Test {
 		CustomerVO cvo = new CustomerVO("0000001", null, null, null, null, null); 
 //		brm.insertManager();
 		
-//		brm.selectManager();
+		brm.selectManager();
 		
 //		brm.deleteManager();
 		
-		brm.bookingInquiryManager(cvo);
+//		brm.bookingInquiryManager(cvo);
 		
 //		brm.bookingManager(cvo);
 

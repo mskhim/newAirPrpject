@@ -59,9 +59,26 @@ public class PlaneVO {
     }
 
 
+ // 헤더 메서드
+    public static String getHeader() {
+        return String.format(
+            "%-10s | %-20s | %-10s | %-10s | %-10s",
+            "No", "Name", "Row", "Col", "Seats"
+        );
+    }
+
+    // toString 메서드
     @Override
     public String toString() {
-        return "PlaneVO [no=" + no + ", name=" + name + ", rowX=" + rowX + ", colY=" + colY + ", seats=" + seats + "]";
+        return String.format(
+            "%-10s | %-20s | %-10s | %-10s | %-10s",
+            no,
+            name,
+            rowX,
+            colY,
+            seats
+        );
     }
+
 }
 

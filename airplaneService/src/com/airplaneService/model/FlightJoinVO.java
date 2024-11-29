@@ -2,19 +2,23 @@ package com.airplaneService.model;
 
 import java.sql.Timestamp;
 
-public class FlightVO {
+public class FlightJoinVO {
 	private String no;
 	private String planeNo;
 	private String departureCountryNo;
 	private String arrivalCountryNo;
 	private int price;
+	private String name;
+	private int distance;
 	private Timestamp departureHour;
 	private Timestamp arrivalHour;
-	private String arvCountryName;
-	private String depCountryName;
 
-	public FlightVO(String no, String planeNo, String departureCountryNo, String arrivalCountryNo, int price,
-			Timestamp departureHour, Timestamp arrivalHour) {
+	public FlightJoinVO() {
+		super();
+	}
+
+	public FlightJoinVO(String no, String planeNo, String departureCountryNo, String arrivalCountryNo, int price,
+			Timestamp departureHour, Timestamp arrivalHour, int distance, String name) {
 		super();
 		this.no = no;
 		this.planeNo = planeNo;
@@ -23,41 +27,16 @@ public class FlightVO {
 		this.price = price;
 		this.departureHour = departureHour;
 		this.arrivalHour = arrivalHour;
+		this.distance = distance;
+		this.name = name;
 	}
 
-	public FlightVO(String no, String planeNo, String departureCountryNo, String arrivalCountryNo, int price,
-			Timestamp departureHour) {
-		super();
-		this.no = no;
-		this.planeNo = planeNo;
-		this.departureCountryNo = departureCountryNo;
-		this.arrivalCountryNo = arrivalCountryNo;
-		this.price = price;
-		this.departureHour = departureHour;
+	public String getName() {
+		return name;
 	}
 
-	public FlightVO(String no, String planeNo, int price, Timestamp departureHour, Timestamp arrivalHour,
-			String arvCountryName, String depCountryName) {
-		super();
-		this.no = no;
-		this.planeNo = planeNo;
-		this.price = price;
-		this.departureHour = departureHour;
-		this.arrivalHour = arrivalHour;
-		this.arvCountryName = arvCountryName;
-		this.depCountryName = depCountryName;
-	}
-
-	public FlightVO(String no, String planeNo, String arrivalCountryNo, Timestamp departureHour) {
-		super();
-		this.no = no;
-		this.planeNo = planeNo;
-		this.arrivalCountryNo = arrivalCountryNo;
-		this.departureHour = departureHour;
-	}
-
-	public FlightVO() {
-		super();
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getNo() {
@@ -116,11 +95,19 @@ public class FlightVO {
 		this.arrivalHour = arrivalHour;
 	}
 
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
 	// 헤더 메서드
 	public static String getHeader() {
 	    return String.format(
-	        "%-10s | %-10s | %-10s | %-15s | %-15s | %-15s | %-15s",
-	        "No", "Plane No", "Price", "Dep. Hour", "Arv. Hour", "Arv. Country", "Dep. Country"
+	        "%-10s | %-10s | %-10s | %-20s | %-10s | %-15s | %-15s",
+	        "No", "Plane No", "Price", "Name", "Distance", "Dep. Hour", "Arv. Hour"
 	    );
 	}
 
@@ -128,14 +115,14 @@ public class FlightVO {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "%-10s | %-10s | %-10d | %-15s | %-15s | %-15s | %-15s",
+	        "%-10s | %-10s | %-10d | %-20s | %-10s | %-15s | %-15s",
 	        no,
 	        planeNo,
 	        price,
+	        name,
+	        distance,
 	        departureHour,
-	        arrivalHour,
-	        arvCountryName,
-	        depCountryName
+	        arrivalHour
 	    );
 	}
 

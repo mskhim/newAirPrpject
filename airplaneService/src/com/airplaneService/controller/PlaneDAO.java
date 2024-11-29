@@ -11,10 +11,10 @@ import com.airplaneService.model.PlaneVO;
 public class PlaneDAO {
 	
 	private static final String PLANE_SELECT = "SELECT * FROM PLANE";
-	private static final String PLANE_INSERT = "INSERT INTO PLANE (NO, NAME, ROWX, COLY) VALUES (?, ?, ?, ?)";
+	private static final String PLANE_INSERT = "INSERT INTO PLANE (NO, NAME, ROWX, COLY) VALUES ((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM00000') FROM PLANE), ?, ?, ?)";
 	private static final String PLANE_UPDATE = "UPDATE PLANE SET NAME = ?, ROWX = ?, COLY = ? WHERE NO = ?";
 	private static final String PLANE_DELETE = "DELETE FROM PLANE WHERE NO = ?";
-	private static final String PLANE_NO_SELECT = "SELECT * FROM PLANE WHERE NO = ?";
+	private static final String PLANE_NO_SELECT = "SELECT * FROM PLANE WHERE NO = TO_char(?,'FM00000')";
 	
     // 여객기 정보 삽입 (INSERT)
     public boolean insertPlaneDB(PlaneVO plane) {
@@ -26,10 +26,9 @@ public class PlaneDAO {
         try {
             con = DBUtility.dbCon();
             pstmt = con.prepareStatement(PLANE_INSERT);
-            pstmt.setString(1, plane.getNo());
-            pstmt.setString(2, plane.getName());
-            pstmt.setInt(3, plane.getRowX());
-            pstmt.setInt(4, plane.getColY());
+            pstmt.setString(1, plane.getName());
+            pstmt.setInt(2, plane.getRowX());
+            pstmt.setInt(3, plane.getColY());
 
             int result = pstmt.executeUpdate();
             successFlag = (result > 0);

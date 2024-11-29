@@ -203,12 +203,13 @@ public class BookingRegisterManager {
 		bvo.setFlightNo(flNo);
 		bvo.setAmount(amount);
 		srm.selectByFlightManager(bvo);//항공편에 맞는 좌석정보 출력
+		System.out.println("1");
 		bvoList= selectSeatCheckManager(bvo);//bvo에 추가된 정보로 좌석을 고른다.
-		for(BookingVO data : bvoList) {
-			System.out.println(data);
-		}
+		System.out.println("1");
 		boolean flag = bookDAO.insertDB(bvoList);//Bookingtable에 정보 추가
+		System.out.println("2");
 		bvo=bookDAO.selectLastDB();//마지막에 추가한 bvo를 반환
+		System.out.println("3");
 		System.out.println((flag) ? "입력성공 : "+bvo.getCode() : "입력실패");
 	}
 

@@ -197,11 +197,25 @@ public class CustomerVO
 		this.cCount = cCount;
 	}
 
+	public static String getHeader() {
+	    return String.format(
+	        "%-10s | %-10s | %-15s | %-15s | %-15s | %-10s | %-10s",
+	        "No", "Name", "Birth", "Phone", "Regist Date", "ID", "Password"
+	    );
+	}
+
 	@Override
-	public String toString()
-	{
-		return "예매번호 : " + no + "성명 : " + name + "생년월일 : " + birth + "휴대폰번호 : " + phone
-				+ "가입일 : " + regist + "아이디 : " + id + "패스워드 : " + pw;
+	public String toString() {
+	    return String.format(
+	        "%-10s | %-10s | %-15s | %-15s | %-15s | %-10s | %-10s",
+	        no,
+	        name,
+	        birth,
+	        phone,
+	        regist,
+	        id,
+	        pw
+	    );
 	}
 	
 	public String countPrint()

@@ -57,9 +57,23 @@ public class CountryVO {
         this.hour = hour;
     }
 
+    public static String getHeader() {
+        return String.format(
+            "%-10s | %-20s | %-15s | %-10s\n",
+            "No", "Name", "Distance", "Hour"
+        );
+    }
+    
     @Override
     public String toString() {
-        return "CountryVO [no=" + no + ", name=" + name + ", distance=" + distance + ", hour=" + hour + "]";
+        return String.format(
+            "%-10s | %-20s | %-15s | %-10s",
+            no,
+            name,
+            distance,
+            hour
+        );
     }
+
 }
 

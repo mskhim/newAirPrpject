@@ -10,9 +10,10 @@ public class CountryRegisterManager {
 	public static Scanner sc = new Scanner(System.in);
 
 	// 여행국가 리스트 출력
-	private void printCountryList() throws SQLException {
+	public static void printCountryList(){
 		CountryDAO countryDAO = new CountryDAO();
 		ArrayList<CountryVO> countries = countryDAO.selectCountryDB();
+		System.out.println(CountryVO.getHeader()); 
 		if (countries != null && !countries.isEmpty()) {
 			for (CountryVO country : countries) {
 				System.out.println(country);
@@ -89,6 +90,7 @@ public class CountryRegisterManager {
 		String no = sc.nextLine();
 		CountryVO country = countryDAO.findCountryByNo(no);
 		if (country != null) {
+			CountryVO.getHeader();
 			System.out.println(country);
 		} else {
 			System.out.println("해당 국가 정보가 존재하지 않습니다.");
@@ -96,7 +98,7 @@ public class CountryRegisterManager {
 	}
 
 	// 유효한 국가 코드를 입력받아 올바른 CountryVO를 반환해주는 함수
-	private CountryVO returnRightNo() throws SQLException {
+	public static CountryVO returnRightNo(){
 		boolean exitFlag = false;
 		CountryVO country = null;
 		CountryDAO countryDAO = new CountryDAO();
@@ -113,5 +115,6 @@ public class CountryRegisterManager {
 		}
 		return country;
 	}
+
 
 }

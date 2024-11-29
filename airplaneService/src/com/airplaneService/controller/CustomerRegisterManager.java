@@ -69,7 +69,7 @@ public class CustomerRegisterManager
 		}
 	}
 
-	public void selectManager ()	// 3번 메뉴 <내 가입정보 확인하기> - 아이디, 휴대폰번호 입력받는 조건.
+	public void findManager ()	// 3번 메뉴 <내 가입정보 확인하기> - 아이디, 휴대폰번호 입력받는 조건.
 	{		
 		CustomerDAO abcdao = new CustomerDAO();
 		ArrayList <CustomerVO> CustomerVOList = new ArrayList <CustomerVO>();
@@ -84,6 +84,7 @@ public class CustomerRegisterManager
 		
 		if (CustomerVOList == null)
 		{
+			CustomerVO.getHeader();
 			System.out.println("출력할 데이터가 존재하지 않습니다.");
 			return;
 		}
@@ -167,9 +168,28 @@ public class CustomerRegisterManager
 	
 	private void printCustomerVOList(ArrayList <CustomerVO> CustomerVOList)	// 출력메소드.
 	{
+		System.out.println(CustomerVO.getHeader());
 		for (CustomerVO p : CustomerVOList)
 		{
 			System.out.println(p);
 		}
 	}
+	
+	public void selectManager ()	// <가입자 전체 정보 출력.>
+	{
+		CustomerDAO abcdao = new CustomerDAO();
+		ArrayList <CustomerVO> airBookingCustomerVOList = new ArrayList <CustomerVO>();
+		
+		airBookingCustomerVOList = abcdao.selectDB();
+		
+		if (airBookingCustomerVOList == null)
+		{
+			System.out.println("출력할 데이터가 존재하지 않습니다.");
+			return;
+		}
+		printCustomerVOList(airBookingCustomerVOList);
+		
+	}
+	
+	
 }
