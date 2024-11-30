@@ -147,7 +147,7 @@ public class BookingVO {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "%-25s | %-10s | %-15s | %-15s | %-10d | %-20s | %-20s | %-20s  | %-22s | %s",
+	        "%-25s | %-10s | %-15s | %-15s | %-10d | %-20s | %-20s | %-19s  | %-22s | %s",
 	        code, 
 	        name, 
 	        depCountry, 

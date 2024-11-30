@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.airplaneService.model.FlightJoinVO;
 import com.airplaneService.model.FlightVO;
 
 public class FlightRegisterManager {
@@ -153,13 +152,13 @@ public class FlightRegisterManager {
 		
 		public void findCountryManager() {
 			FlightDAO fdao = new FlightDAO();
-			ArrayList<FlightJoinVO> flightList = new ArrayList<FlightJoinVO>();
-			System.out.print("항공편 출력을 원하는 나라의 번호를 입력해주세요.\n>>");
+			ArrayList<FlightVO> flightList = new ArrayList<FlightVO>();
 			CountryRegisterManager.printCountryList();
+			System.out.print("항공편 출력을 원하는 나라의 번호를 입력해주세요.\n>>");
 		 String arrivalCountryNo =CountryRegisterManager.returnRightNo().getNo();
-			FlightJoinVO fjvo = new FlightJoinVO();
-			fjvo.setArrivalCountryNo(arrivalCountryNo);
-			flightList = fdao.selectCountryDB(fjvo);
+			FlightVO fvo = new FlightVO();
+			fvo.setArrivalCountryNo(arrivalCountryNo);
+			flightList = fdao.selectCountryDB(fvo);
 			if (flightList == null) {
 				System.out.println("해당하는 항공편이 존재하지 않습니다.");
 				return;
@@ -167,9 +166,9 @@ public class FlightRegisterManager {
 			printFlightJoinList(flightList);
 		}
 		
-		private void printFlightJoinList(ArrayList<FlightJoinVO> flightList) {
-				FlightJoinVO.getHeader();
-			for (FlightJoinVO fjvo : flightList) {
+		private void printFlightJoinList(ArrayList<FlightVO> flightList) {
+				System.out.println(FlightVO.getHeader());
+			for (FlightVO fjvo : flightList) {
 	            System.out.println(fjvo.toString());
 	        }
 	    }

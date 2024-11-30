@@ -1,6 +1,7 @@
 package com.airplaneService.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class FlightVO {
 	private String no;
@@ -37,7 +38,7 @@ public class FlightVO {
 	}
 
 	public FlightVO(String no, String planeNo, int price, Timestamp departureHour, Timestamp arrivalHour,
-			String arvCountryName, String depCountryName) {
+			 String depCountryName,String arvCountryName) {
 		super();
 		this.no = no;
 		this.planeNo = planeNo;
@@ -119,8 +120,8 @@ public class FlightVO {
 	// 헤더 메서드
 	public static String getHeader() {
 	    return String.format(
-	        "%-10s | %-10s | %-10s | %-15s | %-15s | %-15s | %-15s",
-	        "No", "Plane No", "Price", "Dep. Hour", "Arv. Hour", "Arv. Country", "Dep. Country"
+	        "%-10s | %-10s | %-10s | %-20s | %-20s | %-15s | %-15s",
+	        "No", "Plane No", "Price", "Dep. Hour", "Arv. Hour", "Dep. Country", "Arv. Country"
 	    );
 	}
 
@@ -128,16 +129,19 @@ public class FlightVO {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "%-10s | %-10s | %-10d | %-15s | %-15s | %-15s | %-15s",
+	        "%-10s | %-10s | %-10d | %-20s | %-20s | %-15s | %-15s",
 	        no,
 	        planeNo,
 	        price,
-	        departureHour,
-	        arrivalHour,
-	        arvCountryName,
-	        depCountryName
+	        flightDateFormat(departureHour),
+	        flightDateFormat(arrivalHour),
+	        depCountryName,
+	        arvCountryName
 	    );
 	}
-
+	 private String flightDateFormat(Timestamp tp) {
+		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		    	return sdf.format(tp);
+		    }
 
 }

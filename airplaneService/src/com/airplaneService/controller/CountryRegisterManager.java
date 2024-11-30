@@ -13,7 +13,7 @@ public class CountryRegisterManager {
 	public static void printCountryList(){
 		CountryDAO countryDAO = new CountryDAO();
 		ArrayList<CountryVO> countries = countryDAO.selectCountryDB();
-		System.out.println(CountryVO.getHeader()); 
+		System.out.print(CountryVO.getHeader()); 
 		if (countries != null && !countries.isEmpty()) {
 			for (CountryVO country : countries) {
 				System.out.println(country);

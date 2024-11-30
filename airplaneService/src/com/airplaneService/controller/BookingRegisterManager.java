@@ -22,7 +22,7 @@ public class BookingRegisterManager {
 			BookingDAO bookDAO = new BookingDAO();
 			frm.selectManager();//현재 항공편 전체 출력
 			System.out.println("항공편을 입력해주세요.");
-			FlightVO fvo = frm.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
+			FlightVO fvo = FlightRegisterManager.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
 			System.out.println(fvo);
 			System.out.println("해당 항공편을 예매합니다.");
 			bvo.setFlightNo(String.valueOf(fvo.getNo()));
@@ -78,7 +78,7 @@ public class BookingRegisterManager {
 	// 출력
 	public void selectManager() {
 		BookingDAO bDAO = new BookingDAO();
-		System.out.println(BookingVO.getHeader()); 
+		System.out.print(BookingVO.getHeader()); 
 		for(BookingVO data : bDAO.selectDB()) {
 			System.out.println(data.toString());
 		}
@@ -122,7 +122,7 @@ public class BookingRegisterManager {
 		ArrayList<BookingVO> bvoList = new ArrayList<BookingVO>();
 		frm.selectManager();//현재 항공편 전체 출력
 		System.out.println("항공편을 입력해주세요.");
-		FlightVO fvo = frm.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
+		FlightVO fvo = FlightRegisterManager.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
 		System.out.println(fvo);
 		System.out.println("해당 항공편을 예매합니다.");
 		bvo.setFlightNo(String.valueOf(fvo.getNo()));
@@ -162,7 +162,7 @@ public class BookingRegisterManager {
 			ArrayList<BookingVO> bvoList = new ArrayList<BookingVO>();
 			frm.selectManager();//현재 항공편 전체 출력
 			System.out.println("항공편을 입력해주세요.");
-			FlightVO fvo = frm.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
+			FlightVO fvo = FlightRegisterManager.returnRightNo();//유효한 상영정보가 나올때까지 반복한뒤 해당 fvo를저장
 			System.out.println(fvo);
 			System.out.println("해당 항공편을 예매합니다.");
 			bvo.setFlightNo(String.valueOf(fvo.getNo()));
@@ -187,15 +187,18 @@ public class BookingRegisterManager {
 	// 입력
 	public void insertManager()  {
 		SeatsRegisterManager srm = new SeatsRegisterManager();
+		CustomerRegisterManager crm = new CustomerRegisterManager();
+		FlightRegisterManager frm = new FlightRegisterManager();
 		BookingDAO bookDAO = new BookingDAO();
 		BookingVO bvo = new BookingVO();
 		ArrayList<BookingVO> bvoList = new ArrayList<BookingVO>();
+		crm.selectManager();
 		System.out.println("새로운 고객정보를 입력해주세요..");
 		System.out.print(">>");
 		String cusNo = sc.nextLine();
+		frm.selectManager();
 		System.out.println("새로운 항공편을 입력해주세요.");
-		System.out.print(">>");
-		String flNo = sc.nextLine();
+		String flNo=FlightRegisterManager.returnRightNo().getNo();
 		System.out.println("합계 인원을 작성해주세요.");
 		System.out.print(">>");
 		int amount = Integer.parseInt(sc.nextLine());
@@ -203,13 +206,9 @@ public class BookingRegisterManager {
 		bvo.setFlightNo(flNo);
 		bvo.setAmount(amount);
 		srm.selectByFlightManager(bvo);//항공편에 맞는 좌석정보 출력
-		System.out.println("1");
 		bvoList= selectSeatCheckManager(bvo);//bvo에 추가된 정보로 좌석을 고른다.
-		System.out.println("1");
 		boolean flag = bookDAO.insertDB(bvoList);//Bookingtable에 정보 추가
-		System.out.println("2");
 		bvo=bookDAO.selectLastDB();//마지막에 추가한 bvo를 반환
-		System.out.println("3");
 		System.out.println((flag) ? "입력성공 : "+bvo.getCode() : "입력실패");
 	}
 
