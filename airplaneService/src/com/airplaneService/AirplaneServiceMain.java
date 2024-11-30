@@ -57,7 +57,7 @@ public class AirplaneServiceMain {
 
 	}
 	//회원가입 메뉴
-	private static void registerMenu() {
+	private static void registerMenu(){
 		
 	}
 	

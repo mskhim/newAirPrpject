@@ -9,7 +9,9 @@ public class CustomerVO
     private String birth;	// BIRTH VARCHAR2(20), -- 생일(ex)20020707)
     private String phone;	// PHONE VARCHAR2(15), -- uk 휴대폰번호
     private Date regist;	// REGIST DATE NOT NULL,   -- 등록날짜 SYSDATE 
+    //////////////////////////////////////////////////////////////////////
     private int right;	// RIGHT NUMBER(1),    -- 권한
+    //////////////////////////////////////////////////////////////////////
     private String id;	// ID VARCHAR2(20) NOT NULL,   -- uk 아이디
     private String pw;	// PW VARCHAR2(20) NOT NULL,   -- PW 패스워드
     private int cCount;	// COUNT NUMBER(3) DEFAULT 0   -- 예매 합계(booking테이블에서 insert시 계수.)
@@ -22,9 +24,19 @@ public class CustomerVO
     {
     	super();
     	this.cCount= cCount;
-    }
+    }    
     
-	public CustomerVO(String no, String name, String birth, String phone, String id, String pw)
+	public CustomerVO(String name, String birth, String phone, String id, String pw)
+	{
+		super();
+		this.name = name;
+		this.birth = birth;
+		this.phone = phone;
+		this.id = id;
+		this.pw = pw;
+	}   
+    
+    public CustomerVO(String no, String name, String birth, String phone, String id, String pw)
 	{
 		super();
 		this.no = no;
@@ -34,7 +46,6 @@ public class CustomerVO
 		this.id = id;
 		this.pw = pw;
 	}
-    
     
 	public CustomerVO(String no, String name, String birth, String phone, int right, String id, String pw)
 	{
@@ -200,8 +211,9 @@ public class CustomerVO
 	@Override
 	public String toString()
 	{
-		return "예매번호 : " + no + "성명 : " + name + "생년월일 : " + birth + "휴대폰번호 : " + phone
-				+ "가입일 : " + regist + "아이디 : " + id + "패스워드 : " + pw;
+		// no name birth phone regist id pw
+		return "예매번호\t" + "성명\t" + "생년월일\t\t" + "휴대폰번호\t\t" + "가입일\t\t" + "아이디\t\t\t" + "패스워드\t" + 
+				"\n" + no + "\t" + name + "\t" + birth + "\t" + phone + "\t" + regist + "\t" + id + "\t" + pw + "\t";
 	}
 	
 	public String countPrint()
