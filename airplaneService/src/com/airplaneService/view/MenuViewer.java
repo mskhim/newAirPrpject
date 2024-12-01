@@ -92,9 +92,9 @@ public class MenuViewer {
 	
 	// 일반 고객 로그인후 마이페이지 메뉴
 	public static void myPageMenuView() {
-		System.out.println("╔══════════════════════════╗");
-		System.out.println("║ 1. 내정보 수정하기 │ 2. 나가기 ");
-		System.out.println("╚══════════════════════════╝");
+		System.out.println("╔════════════════════════════════════╗");
+		System.out.println("║ 1. 내정보 수정하기 │2. 회원 탈퇴 | 2. 나가기 ");
+		System.out.println("╚════════════════════════════════════╝");
 		System.out.print(">> ");
 	}
 

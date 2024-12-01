@@ -13,6 +13,7 @@ public class FlightVO {
 	private Timestamp arrivalHour;
 	private String arvCountryName;
 	private String depCountryName;
+	private int remain;
 
 	public FlightVO(String no, String planeNo, String departureCountryNo, String arrivalCountryNo, int price,
 			Timestamp departureHour, Timestamp arrivalHour) {
@@ -38,7 +39,7 @@ public class FlightVO {
 	}
 
 	public FlightVO(String no, String planeNo, int price, Timestamp departureHour, Timestamp arrivalHour,
-			 String depCountryName,String arvCountryName) {
+			 String depCountryName,String arvCountryName,int remain) {
 		super();
 		this.no = no;
 		this.planeNo = planeNo;
@@ -47,6 +48,7 @@ public class FlightVO {
 		this.arrivalHour = arrivalHour;
 		this.arvCountryName = arvCountryName;
 		this.depCountryName = depCountryName;
+		this.remain = remain;
 	}
 
 	public FlightVO(String no, String planeNo, String arrivalCountryNo, Timestamp departureHour) {
@@ -120,8 +122,8 @@ public class FlightVO {
 	// 헤더 메서드
 	public static String getHeader() {
 	    return String.format(
-	        "%-10s | %-10s | %-10s | %-20s | %-20s | %-15s | %-15s",
-	        "No", "Plane No", "Price", "Dep. Hour", "Arv. Hour", "Dep. Country", "Arv. Country"
+	        "%-10s | %-10s | %-10s | %-20s | %-20s | %-15s | %-15s | %-15s",
+	        "No", "Plane No", "Price", "Dep. Hour", "Arv. Hour", "Dep. Country", "Arv. Country", "Remain Seats"
 	    );
 	}
 
@@ -129,16 +131,18 @@ public class FlightVO {
 	@Override
 	public String toString() {
 	    return String.format(
-	        "%-10s | %-10s | %-10d | %-20s | %-20s | %-15s | %-15s",
-	        no,
-	        planeNo,
-	        price,
-	        flightDateFormat(departureHour),
-	        flightDateFormat(arrivalHour),
-	        depCountryName,
-	        arvCountryName
+	        "%-10s | %-10s | %-10d | %-20s | %-20s | %-15s | %-15s | %-15d",
+	        no,                 // String or other type, assumed to be a string
+	        planeNo,            // String
+	        price,              // int or double
+	        flightDateFormat(departureHour),  // String (formatted date)
+	        flightDateFormat(arrivalHour),    // String (formatted date)
+	        depCountryName,     // String
+	        arvCountryName,     // String
+	        remain              // int
 	    );
 	}
+
 	 private String flightDateFormat(Timestamp tp) {
 		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		    	return sdf.format(tp);

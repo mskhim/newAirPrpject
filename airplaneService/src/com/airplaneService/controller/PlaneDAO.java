@@ -10,7 +10,7 @@ import com.airplaneService.model.PlaneVO;
 
 public class PlaneDAO {
 	
-	private static final String PLANE_SELECT = "SELECT * FROM PLANE";
+	private static final String PLANE_SELECT = "SELECT * FROM PLANE ORDER BY TO_NUMBER(NO)";
 	private static final String PLANE_INSERT = "INSERT INTO PLANE (NO, NAME, ROWX, COLY) VALUES ((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM00000') FROM PLANE), ?, ?, ?)";
 	private static final String PLANE_UPDATE = "UPDATE PLANE SET NAME = ?, ROWX = ?, COLY = ? WHERE NO = ?";
 	private static final String PLANE_DELETE = "DELETE FROM PLANE WHERE NO = ?";

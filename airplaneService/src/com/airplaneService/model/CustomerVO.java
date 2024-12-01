@@ -6,7 +6,7 @@ public class CustomerVO
 {
     private String no;	// NO CHAR(7), -- pk
     private String name;	// NAME VARCHAR2(20) NOT NULL, -- 이름
-    private String birth;	// BIRTH VARCHAR2(20), -- 생일(ex)20020707)
+    private Date birth;	// BIRTH VARCHAR2(20), -- 생일(ex)20020707)
     private String phone;	// PHONE VARCHAR2(15), -- uk 휴대폰번호
     private Date regist;	// REGIST DATE NOT NULL,   -- 등록날짜 SYSDATE 
     private int right;	// RIGHT NUMBER(1),    -- 권한
@@ -24,7 +24,7 @@ public class CustomerVO
     	this.cCount= cCount;
     }
     
-	public CustomerVO(String no, String name, String birth, String phone, String id, String pw)
+	public CustomerVO(String no, String name, Date birth, String phone, String id, String pw)
 	{
 		super();
 		this.no = no;
@@ -36,7 +36,7 @@ public class CustomerVO
 	}
     
     
-	public CustomerVO(String no, String name, String birth, String phone, int right, String id, String pw)
+	public CustomerVO(String no, String name, Date birth, String phone, int right, String id, String pw)
 	{
 		super();
 		this.no = no;
@@ -48,7 +48,7 @@ public class CustomerVO
 		this.pw = pw;
 	}
     
-	public CustomerVO(String name, String birth, String phone, int right, String id, String pw)
+	public CustomerVO(String name, Date birth, String phone, String id, String pw)
 	{
 		super();
 		this.name = name;
@@ -59,7 +59,7 @@ public class CustomerVO
 		this.pw = pw;
 	}
 	
-	public CustomerVO(String name, String birth, String phone, String id)
+	public CustomerVO(String name, Date birth, String phone, String id)
 	{
 		super();
 		this.name = name;
@@ -68,7 +68,7 @@ public class CustomerVO
 		this.id = id;
 	}
 
-	public CustomerVO(String no, String name, String birth, String phone, Date regist, int right, String id, String pw)
+	public CustomerVO(String no, String name, Date birth, String phone, Date regist, int right, String id, String pw)
 	{
 		super();
 		this.no = no;
@@ -81,7 +81,7 @@ public class CustomerVO
 		this.pw = pw;
 	}
     
-	public CustomerVO(String no, String name, String birth, String phone, Date regist, String id, String pw)
+	public CustomerVO(String no, String name, Date birth, String phone, Date regist, String id, String pw)
 	{
 		super();
 		this.no = no;
@@ -93,7 +93,7 @@ public class CustomerVO
 		this.pw = pw;
 	}
 	
-	public CustomerVO(String no, String name, String birth, String phone, Date regist, int right, String id, String pw, int cCount)
+	public CustomerVO(String no, String name, Date birth, String phone, Date regist, int right, String id, String pw, int cCount)
 	{
 		super();
 		this.no = no;
@@ -127,12 +127,12 @@ public class CustomerVO
 		this.name = name;
 	}
 
-	public String getBirth()
+	public Date getBirth()
 	{
 		return birth;
 	}
 
-	public void setBirth(String birth)
+	public void setBirth(Date birth)
 	{
 		this.birth = birth;
 	}

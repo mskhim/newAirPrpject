@@ -1,7 +1,8 @@
 package com.airplaneService.view;
 
-public interface MYPAGE_MENU_CHOICE {
-	int UPDATE = 1;
-	int END = 2;
-
+public interface MYPAGE_MENU_CHOICE
+{
+	int INFO_UPDATE = 1,
+		INFO_DELETE = 2,
+		END = 3;
 }

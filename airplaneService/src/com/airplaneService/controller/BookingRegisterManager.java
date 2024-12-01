@@ -95,8 +95,19 @@ public class BookingRegisterManager {
 
 	}
 
+	// 삭제
+	public void deleteMyPageManager(CustomerVO cvo){//마이페이지의 취소메뉴
+			System.out.println("삭제할 예매코드를 입력해주세요.");
+			BookingDAO bookDAO = new BookingDAO();
+			BookingVO bvo = returnRightCodeMyPage(cvo);
+			bvo.setCustomerNo(cvo.getNo());
+			boolean flag = bookDAO.deleteDB(bvo);
+			System.out.println((flag) ? "삭제성공" : "삭제실패");
+
+		}
+	
 	// 예매취소
-	public void deleteCancleManager() throws SQLException {
+	public void deleteCancleManager() {
 		System.out.println("취소할 예매코드를 입력해주세요.");
 		BookingDAO bookDAO = new BookingDAO();
 		BookingVO bvo = returnRightCode();
@@ -109,11 +120,11 @@ public class BookingRegisterManager {
 	}
 	
 	//예매 변경, 예매변경은 취소, 인서트의 순으로 이루어질 예정
-	public void updateByCustomerManager(CustomerVO cvo) throws SQLException {
+	public void updateByCustomerManager(CustomerVO cvo) {//마이페이지의 예매변경메뉴
 		FlightRegisterManager frm = new FlightRegisterManager();
 		System.out.println("변경할 예매코드를 입력해주세요.");
 		BookingDAO bookDAO = new BookingDAO();
-		BookingVO bvo = returnRightCode();
+		BookingVO bvo = returnRightCodeMyPage(cvo);
 		BookingPrint.printByCode(bvo);
 		boolean flag = bookDAO.deleteDB(bvo);
 		//--------------------------여기까지는 취소작업
@@ -145,7 +156,7 @@ public class BookingRegisterManager {
 	}
 	
 	//예매 변경, 예매변경은 취소, 인서트의 순으로 이루어질 예정
-	public void updateManager() throws SQLException {
+	public void updateManager() {
 			
 			System.out.println("예매할 고객번호를 입력해주세요.");
 			System.out.print(">>");
@@ -255,4 +266,28 @@ public class BookingRegisterManager {
 		return bvo;
 	}
 
+	// 실행하면 적합한 code 가 나올떄까지 반복해서 올바른 BookingVO를 반환해주는 함수
+		private BookingVO returnRightCodeMyPage(CustomerVO cvo) {
+			boolean exitFlag = false;
+			BookingVO bvo = new BookingVO();
+			BookingDAO bookDAO = new BookingDAO();
+			while (!exitFlag) {
+				System.out.print(">>");
+				String code = sc.nextLine();
+				bvo.setCode(code);
+				bvo.setCustomerNo(cvo.getNo());
+				bvo = bookDAO.selectByCodeAndCusNoDB(bvo);
+				if (bvo.getBookingDate()!= null) {
+					exitFlag = true;
+
+				} else {
+					System.out.println("존재하지 않는 예매정보입니다.");
+					System.out.print("재입력 >>");
+				}
+
+			}
+			return bvo;
+		}
+
+	
 }

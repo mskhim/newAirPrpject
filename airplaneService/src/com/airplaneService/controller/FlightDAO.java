@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import com.airplaneService.model.FlightVO;
 
 public class FlightDAO {
-	public static String FLIGHT_SELECT_BY_NO = "SELECT NO, PLANE_NO, DEPNAME ,ARVNAME,PRICE, DEPARTURE_HOUR, ARRIVAL_HOUR FROM FLIGHT_COUNTRY_JOIN_VIEW WHERE NO = TO_CHAR(?,'FM00000')";//추가
-	public static String FLIGHT_SELECT = "SELECT NO, PLANE_NO, DEPNAME ,ARVNAME,PRICE, DEPARTURE_HOUR, ARRIVAL_HOUR FROM FLIGHT_COUNTRY_JOIN_VIEW ";
+	public static String FLIGHT_SELECT_BY_NO = "SELECT * FROM FLIGHT_COUNTRY_JOIN_VIEW WHERE NO = TO_CHAR(?,'FM00000') ORDER BY TO_NUMBER(NO)";//추가
+	public static String FLIGHT_SELECT = "SELECT * FROM FLIGHT_COUNTRY_JOIN_VIEW ORDER BY TO_NUMBER(NO)";
 //	public static String FLIGHT_SELECT_COUNTRY = "SELECT * FROM FLIGHT WHERE ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000')";
 	public static String FLIGHT_INSERT = "INSERT INTO FLIGHT(NO, PLANE_NO, ARRIVAL_COUNTRY_NO, DEPARTURE_HOUR) VALUES((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM00000') FROM FLIGHT),TO_CHAR(?,'FM00000'),TO_CHAR(?,'FM00000'),?)";
 	public static String FLIGHT_UPDATE = "UPDATE FLIGHT SET PLANE_NO = TO_CHAR(?,'FM00000'), ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000'), DEPARTURE_HOUR = ? WHERE NO = TO_CHAR(?,'FM00000');";
 	public static String FLIGHT_DELETE = "DELETE FROM FLIGHT WHERE NO = TO_CHAR(?,'FM00000')";
-	public static String FLIGHT_SELECT_JOIN_COUNTRY = "SELECT NO,ARRIVAL_COUNTRY_NO, PLANE_NO, DEPNAME ,ARVNAME,PRICE, DEPARTURE_HOUR, ARRIVAL_HOUR FROM FLIGHT_COUNTRY_JOIN_VIEW WHERE ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000')";
+	public static String FLIGHT_SELECT_JOIN_COUNTRY = "SELECT * FROM FLIGHT_COUNTRY_JOIN_VIEW WHERE ARRIVAL_COUNTRY_NO = TO_CHAR(?,'FM00000') ORDER BY TO_NUMBER(NO) ";
 	
 	
 	public ArrayList<FlightVO> selectDB() {
@@ -39,7 +39,8 @@ public class FlightDAO {
 					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
 					String depCountry = rs.getString("DEPNAME");
 					String arvCountry = rs.getString("ARVNAME");
-					FlightVO fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry);
+					int remain = rs.getInt("REMAIN");
+					FlightVO fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry,remain);
 					flightList.add(fvo);
 				} while (rs.next());
 			} else {
@@ -154,7 +155,8 @@ public class FlightDAO {
 					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
 					String depCountry = rs.getString("DEPNAME");
 					String arvCountry = rs.getString("ARVNAME");
-					fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry);
+					int remain = rs.getInt("REMAIN");
+					fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry,remain);
 				} while (rs.next());
 			} 
 		} catch (SQLException e) {
@@ -185,9 +187,10 @@ public class FlightDAO {
 					Timestamp arrivalHour = rs.getTimestamp("ARRIVAL_HOUR");
 					String depCountry = rs.getString("DEPNAME");
 					String arvCountry = rs.getString("ARVNAME");
-					FlightVO fVo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry);
+					int remain = rs.getInt("REMAIN");
+					FlightVO fvo = new FlightVO(no, planeNo, price, departureHour, arrivalHour, depCountry, arvCountry,remain);
 
-					flightList.add(fVo);
+					flightList.add(fvo);
 				} while (rs.next());
 			}
 		} catch (SQLException e) {
