@@ -308,7 +308,7 @@ public class AirplaneServiceMain {
 		int no = 0;
 		BookingRegisterManager brm = new BookingRegisterManager();
 		while (true) {
-			MenuViewer.CustomerLoginMenuView();
+			MenuViewer.CustomerLoginMenuView(cvo);
 			try {
 				no = Integer.parseInt(sc.nextLine());
 			} catch (Exception e) {

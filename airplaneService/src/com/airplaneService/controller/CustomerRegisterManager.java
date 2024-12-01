@@ -393,7 +393,6 @@ public class CustomerRegisterManager
 	}	
 	
 	
-	// 민석님이 제공해주신 로직.
 	public CustomerVO loginManager() throws SQLException
 	{
         CustomerVO cvo = new CustomerVO();
@@ -418,7 +417,6 @@ public class CustomerRegisterManager
         } else
         {
 
-            System.out.println("\n환영합니다." + cvo.getName() + "고객님.");
             return cvo;
         }
     }

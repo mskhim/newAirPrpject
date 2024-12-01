@@ -14,7 +14,7 @@ public class SeatsDAO {
 			+ "JOIN PLANE P \r\n"
 			+ "ON P.NO = S.PLANE_NO\r\n"
 			+ "WHERE S.PLANE_NO = (SELECT PLANE_NO FROM FLIGHT WHERE NO = TO_CHAR(?,'FM00000'))\r\n"
-			+ "ORDER BY ROWX, COLY";
+			+ "ORDER BY ROWX, TO_NUMBER(COLY)";
 
 	// bvo를 받아서 해당 flightNo를 이용해 테이블 전체를 List 에 저장 후 반환
 	public ArrayList<SeatsVO> selectByFlightNoDB(BookingVO bvo) {// bvo 의 flightNo 를 이용해서 저장

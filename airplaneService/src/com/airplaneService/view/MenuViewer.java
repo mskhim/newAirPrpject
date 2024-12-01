@@ -1,5 +1,7 @@
 package com.airplaneService.view;
 
+import com.airplaneService.model.CustomerVO;
+
 public class MenuViewer {
 
 	// 메인 메뉴
@@ -13,8 +15,8 @@ public class MenuViewer {
 	}
 
 	// 고객 로그인 이후 메뉴
-	public static void CustomerLoginMenuView() {
-		System.out.println("\n님 환영합니다. 메뉴를 선택해주세요.");
+	public static void CustomerLoginMenuView(CustomerVO cvo) {
+		System.out.println("\n"+cvo.getName()+"님 환영합니다. 메뉴를 선택해주세요.");
 		System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
 		System.out.println("║ 1. 예매하기 │ 2. 나의 예매내역 │ 3. 마이페이지 │ 4. 이용가능한 항공편 확인 │ 5. 로그아웃 │ 6. 종료 ");
 		System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝");
