@@ -237,7 +237,7 @@ public class CustomerRegisterManager
 		
 		Date birth = null;
 		System.out.println("변경할 생년월일을 입력해주세요.(YYYY/MM/DD) (x입력시 기존값 사용) ");
-		System.out.print("변경할 생년월일을 입력해주세요.(YYYY/MM/DD) (x입력시 기존값 사용) ");
+		System.out.print(">> ");
 		boolean birthFlag = false;
 		while (!birthFlag) {
 			String stsp = scan.nextLine();
@@ -253,7 +253,8 @@ public class CustomerRegisterManager
 			}
 		}
 		
-		System.out.print("변경할 휴대폰번호를 입력해주세요. (x입력시 기존값 사용) ");
+		System.out.println("변경할 휴대폰번호를 입력해주세요. (x입력시 기존값 사용) ");
+		System.out.print(">> ");
 		String phone = scan.nextLine().trim();
 		if(phone.equals("x")) {
 			phone= cvo.getPhone();

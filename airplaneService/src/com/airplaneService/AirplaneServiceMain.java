@@ -373,8 +373,8 @@ public class AirplaneServiceMain {
 		CustomerRegisterManager crm = new CustomerRegisterManager();
 		int no = 0;
 		boolean exitFlag = false;
-		crm.selectMypageManager(cvo);
 		while (!exitFlag) {
+			crm.selectMypageManager(cvo);
 			MenuViewer.myPageMenuView();
 			try {
 				no = Integer.parseInt(sc.nextLine());
