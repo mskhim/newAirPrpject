@@ -288,7 +288,6 @@ public class CustomerDAO
 	        		Date regist = rs.getDate("REGIST");
 	        		int right = rs.getInt("RIGHT");
 	        		cvo = new CustomerVO(no, name, birth, phone,  regist, right, id, pw,cCount);
-	        		System.out.println(cvo);
 	        	}
 				
 			} catch (Exception e) {
