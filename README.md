@@ -23,7 +23,15 @@
 3. 사용자와 관리자가 모두 사용할 수 있는 직관적인 UI 제공
 4. **MVC 아키텍처**를 통한 코드 구조화
 
-## ** ERD **
+## 💻 실행화면
+- 로그인 화면
+ ![image2](https://github.com/user-attachments/assets/c7218e1e-524e-4789-a595-dfd484b9533d)
+- 항공편 예매 화면
+![image3](https://github.com/user-attachments/assets/92a6b28e-e103-4abc-8238-fdd3b72587c6)
+- 좌석 예매 화면
+![image1](https://github.com/user-attachments/assets/b1bdd8aa-9f2b-48c7-b0b3-9106ef27d81c)
+
+## :grey_exclamation: ERD 
 ![image](https://github.com/user-attachments/assets/1283b7de-7ded-4f93-8447-6941cc31487a)
 
 ## 🚧 **핵심 트러블 슈팅**
