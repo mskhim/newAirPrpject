@@ -25,10 +25,14 @@
 
 ## 💻 실행화면
 - 로그인 화면
+
+  
  ![image2](https://github.com/user-attachments/assets/c7218e1e-524e-4789-a595-dfd484b9533d)
 - 항공편 예매 화면
 ![image3](https://github.com/user-attachments/assets/92a6b28e-e103-4abc-8238-fdd3b72587c6)
 - 좌석 예매 화면
+
+  
 ![image1](https://github.com/user-attachments/assets/b1bdd8aa-9f2b-48c7-b0b3-9106ef27d81c)
 
 ## :grey_exclamation: ERD 
