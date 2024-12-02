@@ -27,9 +27,12 @@
 - 로그인 화면
 
   
- ![image2](https://github.com/user-attachments/assets/c7218e1e-524e-4789-a595-dfd484b9533d)
+![캡처](https://github.com/user-attachments/assets/4724d8c5-348e-466d-a3e4-93911eff845a)
+
 - 항공편 예매 화면
-![image3](https://github.com/user-attachments/assets/92a6b28e-e103-4abc-8238-fdd3b72587c6)
+
+
+![항공편](https://github.com/user-attachments/assets/8027e285-ef28-4d72-b3e8-4643aa5fbeec)
 - 좌석 예매 화면
 
   
