@@ -18,6 +18,8 @@ public class CustomerDAO
 	public final String CUSTOMER_INSERT = "INSERT INTO CUSTOMER(NO, NAME, BIRTH, PHONE, REGIST, ID, PW) VALUES((SELECT TO_CHAR(NVL(MAX(NO),0)+1,'FM0000000') FROM CUSTOMER), ?, ?, ?, SYSDATE, ?, ?)";
 		public final String CUSTOMER_CHECK_SELECT = "SELECT NO, NAME, BIRTH, PHONE, REGIST, ID, PW FROM CUSTOMER WHERE ID=? AND PHONE=?";
 		public final String CUSTOMER_UPDATE = "UPDATE CUSTOMER SET NAME=?, BIRTH=?, PHONE=?, REGIST=SYSDATE WHERE ID=?";
+		public final String CUSTOMER_RIGHTA_UPDATE = "UPDATE CUSTOMER SET RIGHT = '1' WHERE ID=?";
+		public final String CUSTOMER_RIGHTN_UPDATE = "UPDATE CUSTOMER SET RIGHT = '0' WHERE ID=?";
 	    public final String CUSTOMER_DELETE = "DELETE FROM CUSTOMER WHERE ID=?";
 	    public final String CUSTOMER_OUT_DELETE = "DELETE FROM CUSTOMER WHERE ID=? AND PHONE=?";
 	    public final String CUSTOMER_SELECT = "SELECT * FROM CUSTOMER ORDER BY TO_NUMBER(NO)";
@@ -68,6 +70,54 @@ public class CustomerDAO
 	    	
 	    	return successFlag;
 	    }
+	    
+	    public boolean updateRightADB(CustomerVO abcvo) 	// 1번(로그인)->3번(마이페이지)->1번 <내정보 수정하기>
+	    {
+	    	boolean successFlag = false; 
+	    	
+	    	Connection con = null;
+	    	PreparedStatement pstmt = null;
+	    	int result =0;
+	    	con = DBUtility.dbCon();
+	    	try {
+	    		pstmt = con.prepareStatement(CUSTOMER_RIGHTA_UPDATE);
+	    		pstmt.setString(1, abcvo.getId());
+	    		result = pstmt.executeUpdate();
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	    	
+	    	DBUtility.dbClose(con, pstmt);
+	    	
+	    	successFlag = (result != 0) ? true : false;
+	    	
+	    	return successFlag;
+	    }
+	    
+	    public boolean updateRightNDB(CustomerVO abcvo) 	// 1번(로그인)->3번(마이페이지)->1번 <내정보 수정하기>
+	    {
+	    	boolean successFlag = false; 
+	    	
+	    	Connection con = null;
+	    	PreparedStatement pstmt = null;
+	    	int result =0;
+	    	
+	    	con = DBUtility.dbCon();
+	    	try {
+	    		pstmt = con.prepareStatement(CUSTOMER_RIGHTN_UPDATE);
+	    		pstmt.setString(1, abcvo.getId());
+	    		result = pstmt.executeUpdate();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	    	DBUtility.dbClose(con, pstmt);
+	    	
+	    	successFlag = (result != 0) ? true : false;
+	    	
+	    	return successFlag;
+	    }
+	    
 	    
 	    public ArrayList <CustomerVO> selectCheckDB(String idValue, String phoneValue)	// 1번(로그인)->3번(마이페이지)->2번 <내정보 조회하기>
 		{

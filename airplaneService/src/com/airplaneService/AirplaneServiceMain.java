@@ -289,6 +289,9 @@ public class AirplaneServiceMain {
 				case MANAGE_CUSTOMER_MENU_CHOICE.FIND:
 //					crm.findManager();
 					break;
+				case MANAGE_CUSTOMER_MENU_CHOICE.RIGHT:
+					crm.updaterRightManager();
+					break;
 				case MANAGE_CUSTOMER_MENU_CHOICE.END:
 					System.out.println("이전메뉴로 돌아갑니다.");
 					exitFlag = true;

@@ -282,6 +282,31 @@ public class CustomerRegisterManager
 		}
 	}
 	
+	
+	public void updaterRightManager ()	// 관리자 회원정보 수정 메뉴
+	{
+		CustomerDAO abcdao = new CustomerDAO();
+		selectManager();
+		System.out.println("권한을 수정할 ID를입력해주세요. ");
+		System.out.print(">>");
+		String id = returnRightId().getId();
+		System.out.println("관리자 계정으로 전환하시려면 Y, 일반계정은 N을 입력해주세요.");
+		System.out.print(">>");
+		String admin = scan.nextLine();
+		CustomerVO cvo = new CustomerVO();
+		cvo.setId(id);
+		if(admin.equals("Y")) {
+			abcdao.updateRightADB(cvo);
+			System.out.println("관리자 계정으로 전환했습니다.");
+		}else {
+			abcdao.updateRightNDB(cvo);
+			System.out.println("일반 계정으로 전환했습니다.");
+		}
+		
+		
+	}
+	
+	
 	public void findManager ()	// 관리자모드 회원찾기
 	{		
 		CustomerDAO abcdao = new CustomerDAO();
