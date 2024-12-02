@@ -23,6 +23,7 @@ import com.airplaneService.view.MenuViewer;
 
 public class AirplaneServiceMain {
 	public static Scanner sc = new Scanner(System.in);
+	
 	// 메인
 	public static void main(String[] args) throws SQLException {
 		int no = 0;
@@ -54,6 +55,7 @@ public class AirplaneServiceMain {
 
 	}
 	
+	//관리자 로그인 메뉴
 	private static boolean managerLoginMenu() {
 		int no = 0;
 		while (true) {
@@ -287,7 +289,7 @@ public class AirplaneServiceMain {
 					crm.deleteManager();
 					break;
 				case MANAGE_CUSTOMER_MENU_CHOICE.FIND:
-//					crm.findManager();
+					crm.findManager();
 					break;
 				case MANAGE_CUSTOMER_MENU_CHOICE.RIGHT:
 					crm.updaterRightManager();
@@ -370,7 +372,6 @@ public class AirplaneServiceMain {
 		
 	}
 
-	//마이페이지 메뉴
 	// 마이페이지 메뉴.
 	private static void myPageMenu(CustomerVO cvo){
 		CustomerRegisterManager crm = new CustomerRegisterManager();

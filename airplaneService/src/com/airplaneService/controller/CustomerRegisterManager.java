@@ -104,8 +104,8 @@ public class CustomerRegisterManager
  			System.out.print(">>");
  			id = scan.nextLine();
  			cvo.setId(id);
- 			cvo = cDAO.selectByIdDB(cvo);
- 			if (cvo.getName()== null) {
+ 			CustomerVO cvo2 = cDAO.selectByIdDB(cvo);
+ 			if (cvo2.getName()== null) {
  				System.out.println("사용가능한 아이디입니다.");
  				System.out.print(">>");
  				exitFlag = true;
